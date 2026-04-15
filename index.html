@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Louange Lidvine — Data Analyst & Frontend Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#080810;--bg2:#0f0f1a;--card:#13131f;--card2:#1a1a2e;
+      --border:#22223a;--accent:#7c3aed;--a2:#a855f7;--teal:#06b6d4;
+      --green:#10b981;--orange:#f59e0b;--text:#f0effe;--muted:#7a789a;
+      --r:12px;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden}
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+    a{text-decoration:none;color:inherit}
+    img{display:block}
+
+    /* ─ NAV ─ */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:999;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 60px;
+      background:rgba(8,8,16,0.88);backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+    }
+    .logo{font-size:1.2rem;font-weight:900;
+      background:linear-gradient(135deg,var(--a2),var(--teal));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .nav-links{display:flex;gap:36px;list-style:none}
+    .nav-links a{color:var(--muted);font-size:.875rem;font-weight:500;transition:color .2s}
+    .nav-links a:hover{color:var(--text)}
+    .nav-cta{
+      display:flex;align-items:center;gap:8px;
+      padding:9px 22px;border-radius:8px;font-size:.82rem;font-weight:700;
+      background:linear-gradient(135deg,var(--accent),var(--a2));color:#fff;
+      transition:opacity .2s,transform .2s;
+    }
+    .nav-cta:hover{opacity:.85;transform:translateY(-1px)}
+
+    /* ─ HERO ─ */
+    .hero{
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      text-align:center;padding:130px 24px 80px;position:relative;overflow:hidden;
+    }
+    .hero-glow1{
+      position:absolute;top:-180px;left:50%;transform:translateX(-50%);
+      width:800px;height:800px;border-radius:50%;
+      background:radial-gradient(circle,rgba(124,58,237,.2) 0%,transparent 65%);
+      pointer-events:none;
+    }
+    .hero-glow2{
+      position:absolute;bottom:-120px;right:-80px;
+      width:500px;height:500px;border-radius:50%;
+      background:radial-gradient(circle,rgba(6,182,212,.12) 0%,transparent 65%);
+      pointer-events:none;
+    }
+    .hero-inner{position:relative;z-index:1;max-width:780px}
+    .avatar{
+      width:130px;height:130px;border-radius:50%;
+      border:3px solid var(--accent);margin:0 auto 24px;
+      object-fit:cover;
+      box-shadow:0 0 40px rgba(124,58,237,.35);
+    }
+    .status-dot{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.35);
+      color:#34d399;padding:5px 14px;border-radius:100px;
+      font-size:.75rem;font-weight:700;letter-spacing:.06em;margin-bottom:22px;
+    }
+    .status-dot::before{
+      content:'';width:7px;height:7px;border-radius:50%;
+      background:#34d399;animation:pulse 2s infinite;
+    }
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .hero h1{
+      font-size:clamp(2.4rem,6vw,4.2rem);font-weight:900;line-height:1.08;
+      margin-bottom:18px;letter-spacing:-.02em;
+    }
+    .hero h1 span{
+      background:linear-gradient(135deg,var(--a2) 0%,var(--teal) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .hero-tagline{
+      font-size:1.15rem;color:var(--muted);max-width:600px;
+      margin:0 auto 32px;line-height:1.75;
+    }
+    .hero-tagline strong{color:var(--text)}
+    .hero-pills{
+      display:flex;flex-wrap:wrap;gap:10px;
+      justify-content:center;margin-bottom:36px;
+    }
+    .pill{
+      background:var(--card);border:1px solid var(--border);
+      padding:8px 18px;border-radius:100px;
+      font-size:.82rem;font-weight:600;
+      display:flex;align-items:center;gap:7px;
+    }
+    .pill i{color:var(--a2);font-size:.78rem}
+    .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:13px 28px;border-radius:10px;font-weight:700;font-size:.875rem;
+      transition:all .2s;border:none;cursor:pointer;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),var(--a2));color:#fff;
+      box-shadow:0 4px 20px rgba(124,58,237,.35);
+    }
+    .btn-primary:hover{opacity:.88;transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.45)}
+    .btn-ghost{
+      background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);
+    }
+    .btn-ghost:hover{background:rgba(124,58,237,.1);border-color:var(--a2)}
+
+    /* ─ SECTION WRAPPER ─ */
+    .sec{padding:100px 24px;max-width:1120px;margin:0 auto}
+    .sec-label{
+      font-size:.72rem;font-weight:800;letter-spacing:.14em;
+      color:var(--a2);text-transform:uppercase;margin-bottom:10px;
+    }
+    .sec-title{
+      font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;
+      margin-bottom:14px;letter-spacing:-.02em;
+    }
+    .sec-sub{color:var(--muted);max-width:600px;margin-bottom:60px;line-height:1.75}
+    .divider{height:1px;background:var(--border);max-width:1120px;margin:0 auto}
+
+    /* ─ ABOUT ─ */
+    .about-grid{display:grid;grid-template-columns:3fr 2fr;gap:60px;align-items:start}
+    .about-text p{color:var(--muted);margin-bottom:18px;line-height:1.8;font-size:.95rem}
+    .about-text p strong{color:var(--text)}
+    .about-btns{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+    .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .stat-box{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:var(--r);padding:22px 18px;text-align:center;
+      transition:border-color .2s;
+    }
+    .stat-box:hover{border-color:var(--accent)}
+    .stat-box .n{
+      font-size:1.9rem;font-weight:900;
+      background:linear-gradient(135deg,var(--a2),var(--teal));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      line-height:1;margin-bottom:6px;
+    }
+    .stat-box .l{font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.04em}
+
+    /* ─ WHAT I DO ─ */
+    .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .srv{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:var(--r);padding:28px 22px;
+      transition:border-color .25s,transform .25s;
+    }
+    .srv:hover{border-color:var(--accent);transform:translateY(-4px)}
+    .srv-icon{
+      width:48px;height:48px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.3rem;margin-bottom:18px;
+    }
+    .srv h3{font-size:.95rem;font-weight:700;margin-bottom:10px}
+    .srv p{font-size:.82rem;color:var(--muted);line-height:1.7}
+
+    /* ─ TOOLS (horizontal icon grid) ─ */
+    .tools-section{background:var(--bg2);padding:80px 24px}
+    .tools-inner{max-width:1120px;margin:0 auto}
+    .tools-group{margin-bottom:48px}
+    .tools-group-label{
+      font-size:.72rem;font-weight:800;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--muted);margin-bottom:22px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .tools-group-label::after{content:'';flex:1;height:1px;background:var(--border)}
+    .tools-row{
+      display:flex;flex-direction:row;flex-wrap:wrap;
+      gap:14px;align-items:center;
+    }
+    .tool-item{
+      display:flex;flex-direction:column;align-items:center;gap:7px;
+      background:var(--card);border:1px solid var(--border);
+      border-radius:10px;padding:14px 16px;min-width:76px;
+      transition:border-color .2s,transform .2s;cursor:default;
+    }
+    .tool-item:hover{border-color:var(--a2);transform:translateY(-3px)}
+    .tool-item img{width:36px;height:36px;object-fit:contain}
+    .tool-item span{font-size:.68rem;color:var(--muted);font-weight:600;white-space:nowrap}
+
+    /* ─ PROJECTS ─ */
+    .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+    .proj{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:var(--r);padding:30px;
+      display:flex;flex-direction:column;
+      transition:border-color .25s,transform .25s;
+    }
+    .proj:hover{border-color:var(--accent);transform:translateY(-4px)}
+    .proj-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+    .proj-icon{
+      width:46px;height:46px;border-radius:11px;
+      display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;
+    }
+    .proj-links-top{display:flex;gap:8px}
+    .proj-link-icon{
+      width:32px;height:32px;border-radius:8px;
+      background:rgba(255,255,255,.05);border:1px solid var(--border);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--muted);font-size:.8rem;
+      transition:color .2s,border-color .2s;
+    }
+    .proj-link-icon:hover{color:var(--a2);border-color:var(--a2)}
+    .proj h3{font-size:1rem;font-weight:800;margin-bottom:8px}
+    .proj-desc{color:var(--muted);font-size:.855rem;line-height:1.75;flex:1;margin-bottom:18px}
+    .proj-highlights{
+      list-style:none;margin-bottom:18px;
+    }
+    .proj-highlights li{
+      font-size:.8rem;color:var(--muted);padding-left:14px;
+      position:relative;margin-bottom:5px;
+    }
+    .proj-highlights li::before{
+      content:'▸';position:absolute;left:0;color:var(--a2);font-size:.7rem;top:1px;
+    }
+    .proj-tags{display:flex;flex-wrap:wrap;gap:7px}
+    .ptag{
+      background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);
+      padding:3px 10px;border-radius:6px;font-size:.72rem;
+      color:var(--a2);font-weight:600;
+    }
+
+    /* ─ EXPERIENCE ─ */
+    .exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .exp-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:var(--r);padding:30px;
+      transition:border-color .2s;
+    }
+    .exp-card:hover{border-color:var(--accent)}
+    .exp-date{
+      display:inline-block;
+      background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.25);
+      color:var(--a2);padding:3px 12px;border-radius:100px;
+      font-size:.72rem;font-weight:700;letter-spacing:.06em;margin-bottom:14px;
+    }
+    .exp-role{font-size:1.05rem;font-weight:800;margin-bottom:4px}
+    .exp-company{
+      color:var(--muted);font-size:.875rem;margin-bottom:18px;
+      display:flex;align-items:center;gap:6px;
+    }
+    .exp-company i{color:var(--a2);font-size:.75rem}
+    .exp-list{list-style:none}
+    .exp-list li{
+      font-size:.83rem;color:var(--muted);padding-left:16px;
+      position:relative;margin-bottom:9px;line-height:1.65;
+    }
+    .exp-list li::before{
+      content:'→';position:absolute;left:0;color:var(--a2);font-size:.75rem;top:2px;
+    }
+    .exp-list li strong{color:var(--text)}
+
+    /* ─ IMPACT ─ */
+    .impact-sec{background:var(--bg2);padding:80px 24px}
+    .impact-inner{max-width:1120px;margin:0 auto}
+    .impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+    .impact-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:var(--r);padding:28px 20px;text-align:center;
+      transition:border-color .2s;
+    }
+    .impact-card:hover{border-color:var(--a2)}
+    .impact-card .big{
+      font-size:2.4rem;font-weight:900;
+      background:linear-gradient(135deg,var(--a2),var(--teal));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      line-height:1;margin-bottom:8px;
+    }
+    .impact-card p{font-size:.8rem;color:var(--muted);line-height:1.6}
+
+    /* ─ CONTACT ─ */
+    .contact-box{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:16px;padding:56px;
+      display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
+    }
+    .contact-left h3{
+      font-size:1.8rem;font-weight:900;margin-bottom:14px;letter-spacing:-.02em;
+    }
+    .contact-left p{color:var(--muted);margin-bottom:28px;line-height:1.8;font-size:.93rem}
+    .contact-links{display:flex;flex-direction:column;gap:14px}
+    .clink{
+      display:flex;align-items:center;gap:14px;
+      background:var(--bg2);border:1px solid var(--border);
+      border-radius:10px;padding:14px 18px;
+      transition:border-color .2s,background .2s;
+    }
+    .clink:hover{border-color:var(--a2);background:rgba(124,58,237,.06)}
+    .clink-ico{
+      width:38px;height:38px;border-radius:9px;flex-shrink:0;
+      background:rgba(124,58,237,.15);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--a2);font-size:.95rem;
+    }
+    .clink small{font-size:.7rem;color:var(--muted);display:block;margin-bottom:1px}
+    .clink span{font-size:.875rem;font-weight:600}
+
+    /* ─ FOOTER ─ */
+    footer{
+      text-align:center;padding:30px 24px;
+      border-top:1px solid var(--border);color:var(--muted);font-size:.8rem;
+    }
+    footer b{
+      background:linear-gradient(135deg,var(--a2),var(--teal));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+
+    /* ─ RESPONSIVE ─ */
+    @media(max-width:900px){
+      nav{padding:14px 20px}
+      .nav-links{display:none}
+      .about-grid,.exp-grid,.contact-box{grid-template-columns:1fr}
+      .services-grid{grid-template-columns:1fr 1fr}
+      .projects-grid{grid-template-columns:1fr}
+      .impact-grid{grid-template-columns:1fr 1fr}
+      .sec{padding:72px 20px}
+      .contact-box{padding:32px 24px}
+    }
+    @media(max-width:560px){
+      .services-grid,.impact-grid{grid-template-columns:1fr}
+      .stat-grid{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Louange.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">What I Do</a></li>
+    <li><a href="#tools">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://docs.google.com/document/d/1z42Bsycj3viUcDtefdsnhLfo7seEIC1O2nS-OIs3c4c/edit?usp=sharing"
+     target="_blank" class="nav-cta">
+    <i class="fas fa-file-alt"></i> View CV
+  </a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow1"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-inner">
+    <img class="avatar" src="https://github.com/louange-lidvine.png" alt="Louange Lidvine"
+         onerror="this.src='https://ui-avatars.com/api/?name=Louange+Lidvine&background=7c3aed&color=fff&size=200'"/>
+    <div class="status-dot">OPEN TO OPPORTUNITIES</div>
+    <h1>Louange Lidvine<br/><span>Bizimana</span></h1>
+    <div class="hero-pills">
+      <span class="pill"><i class="fas fa-chart-line"></i> Data Analyst</span>
+      <span class="pill"><i class="fas fa-briefcase"></i> Business Analyst</span>
+      <span class="pill"><i class="fas fa-database"></i> SQL Expert</span>
+      <span class="pill"><i class="fab fa-python"></i> Python</span>
+      <span class="pill"><i class="fas fa-code"></i> Frontend Developer</span>
+    </div>
+    <p class="hero-tagline">
+      I turn complex data into <strong>clear business decisions</strong> — using SQL, Python, Power BI, and Excel.
+      I also build fast, modern web interfaces with React and Next.js.
+      Based in <strong>Kigali, Rwanda 🇷🇼</strong>
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary"><i class="fas fa-folder-open"></i> View My Work</a>
+      <a href="#contact" class="btn btn-ghost"><i class="fas fa-paper-plane"></i> Contact Me</a>
+      <a href="https://github.com/louange-lidvine" target="_blank" class="btn btn-ghost">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="sec" id="about">
+  <div class="sec-label">About Me</div>
+  <h2 class="sec-title">Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm a <strong>Data Analyst and Business Analyst</strong> with a background in software engineering,
+        currently working at <strong>Centrika Ltd</strong> in Kigali, Rwanda. I specialize in
+        designing SQL-based data analysis workflows, building interactive Power BI dashboards,
+        and automating reporting pipelines with Python — turning raw operational data into
+        insights that guide real decisions.
+      </p>
+      <p>
+        Before pivoting fully into data, I worked as a <strong>frontend developer and team lead</strong>
+        at Rwanda TVET Board, where I led software development teams and built data-integrated
+        systems for monitoring and reporting. That combination of engineering and analytics gives me
+        a rare ability to understand both the technical data infrastructure and the business
+        questions it needs to answer.
+      </p>
+      <p>
+        I'm driven by a passion for using data to improve <strong>public services, healthcare
+        systems, and operational efficiency</strong> across Africa. I believe the right insight,
+        delivered clearly, can change how an organization operates. Whether it's a KPI dashboard
+        for an operations team or an automated monthly report, I build things that people
+        actually use.
+      </p>
+      <p>
+        I'm fluent in <strong>English</strong> and <strong>Kinyarwanda</strong>, comfortable working
+        with cross-functional teams, and always learning — currently deepening my Power BI skills
+        and exploring machine learning applications for business forecasting.
+      </p>
+      <div class="about-btns">
+        <a href="mailto:lidvinelouange@gmail.com" class="btn btn-primary">
+          <i class="fas fa-envelope"></i> Get In Touch
+        </a>
+        <a href="https://docs.google.com/document/d/1z42Bsycj3viUcDtefdsnhLfo7seEIC1O2nS-OIs3c4c/edit?usp=sharing"
+           target="_blank" class="btn btn-ghost">
+          <i class="fas fa-download"></i> Download CV
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="n">2+</div><div class="l">Years in Industry</div></div>
+        <div class="stat-box"><div class="n">4+</div><div class="l">Data Projects</div></div>
+        <div class="stat-box"><div class="n">SQL</div><div class="l">Advanced Level</div></div>
+        <div class="stat-box"><div class="n">2</div><div class="l">Companies Led Teams</div></div>
+        <div class="stat-box" style="grid-column:1/-1">
+          <div class="n" style="font-size:1.3rem">🇷🇼 Kigali, Rwanda</div>
+          <div class="l" style="margin-top:6px">Open to Remote Opportunities</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT I DO -->
+<section class="sec" id="services">
+  <div class="sec-label">What I Do</div>
+  <h2 class="sec-title">My Core Services</h2>
+  <p class="sec-sub">From raw data to business insight, and from wireframe to deployed product — I cover the full spectrum.</p>
+  <div class="services-grid">
+    <div class="srv">
+      <div class="srv-icon" style="background:rgba(124,58,237,.15)">📊</div>
+      <h3>Data Analysis & Reporting</h3>
+      <p>I design end-to-end analysis workflows using SQL and Python — from data extraction and cleaning to aggregation, trend analysis, and KPI reporting. I deliver insights that are clear, reproducible, and actionable.</p>
+    </div>
+    <div class="srv">
+      <div class="srv-icon" style="background:rgba(6,182,212,.15)">📈</div>
+      <h3>Business Intelligence & Dashboards</h3>
+      <p>I build interactive dashboards in Power BI and Streamlit that give decision-makers a real-time view of performance. I design for clarity — so non-technical stakeholders can read and act on the data.</p>
+    </div>
+    <div class="srv">
+      <div class="srv-icon" style="background:rgba(245,158,11,.15)">⚙️</div>
+      <h3>Python Automation & Pipelines</h3>
+      <p>I write Python scripts that automate repetitive reporting tasks — scheduled data extraction, cleaning, transformation, and delivery. I've automated workflows that previously took analysts hours every week.</p>
+    </div>
+    <div class="srv">
+      <div class="srv-icon" style="background:rgba(16,185,129,.15)">🌐</div>
+      <h3>Frontend Development</h3>
+      <p>With 2+ years in React, Next.js, and TypeScript, I build performant and accessible web applications. I understand UX, data visualization on the web, and how to connect front-end products to data backends.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TOOLS / TECH STACK -->
+<div class="tools-section" id="tools">
+  <div class="tools-inner">
+    <div class="sec-label">Tech Stack</div>
+    <h2 class="sec-title">Languages & Tools</h2>
+    <p class="sec-sub">The full toolkit I use across data analytics and frontend development — all arranged the way you'd expect.</p>
+
+    <div class="tools-group">
+      <div class="tools-group-label">Data & Analytics</div>
+      <div class="tools-row">
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python"/>
+          <span>Python</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="SQL"/>
+          <span>SQL</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg" alt="Pandas"/>
+          <span>Pandas</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg" alt="NumPy"/>
+          <span>NumPy</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Matplotlib_icon.svg" alt="Matplotlib"/>
+          <span>Matplotlib</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://seaborn.pydata.org/_images/logo-mark-lightbg.svg" alt="Seaborn"/>
+          <span>Seaborn</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://streamlit.io/images/brand/streamlit-mark-color.svg" alt="Streamlit"/>
+          <span>Streamlit</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://www.vectorlogo.zone/logos/microsoft_powerbi/microsoft_powerbi-icon.svg" alt="Power BI"/>
+          <span>Power BI</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://img.icons8.com/color/48/microsoft-excel-2019.png" alt="Excel"/>
+          <span>Excel</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://www.vectorlogo.zone/logos/tensorflow/tensorflow-icon.svg" alt="TensorFlow"/>
+          <span>TensorFlow</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tools-group">
+      <div class="tools-group-label">Frontend & Web Development</div>
+      <div class="tools-row">
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="React"/>
+          <span>React</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://cdn.worldvectorlogo.com/logos/nextjs-2.svg" alt="Next.js"/>
+          <span>Next.js</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="TypeScript"/>
+          <span>TypeScript</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript"/>
+          <span>JavaScript</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="Tailwind"/>
+          <span>Tailwind</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="HTML5"/>
+          <span>HTML5</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="CSS3"/>
+          <span>CSS3</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="Node.js"/>
+          <span>Node.js</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="MongoDB"/>
+          <span>MongoDB</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" alt="Redux"/>
+          <span>Redux</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Svelte_Logo.svg" alt="Svelte"/>
+          <span>Svelte</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/flutter/flutter-original.svg" alt="Flutter"/>
+          <span>Flutter</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tools-group" style="margin-bottom:0">
+      <div class="tools-group-label">Tools & Workflow</div>
+      <div class="tools-row">
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" alt="Git"/>
+          <span>Git</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" alt="GitHub" style="filter:invert(1)"/>
+          <span>GitHub</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="Figma"/>
+          <span>Figma</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="Postman"/>
+          <span>Postman</span>
+        </div>
+        <div class="tool-item">
+          <img src="https://www.vectorlogo.zone/logos/vercel/vercel-icon.svg" alt="Vercel" style="filter:invert(1)"/>
+          <span>Vercel</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section class="sec" id="projects">
+  <div class="sec-label">Portfolio</div>
+  <h2 class="sec-title">Data Analytics Projects</h2>
+  <p class="sec-sub">End-to-end projects covering SQL analysis, Python EDA, Excel automation, and interactive BI dashboards — built to demonstrate real business analyst skills.</p>
+  <div class="projects-grid">
+
+    <div class="proj">
+      <div class="proj-top">
+        <div class="proj-icon" style="background:rgba(124,58,237,.2)">📊</div>
+        <div class="proj-links-top">
+          <a href="https://github.com/louange-lidvine/sales-sql-analysis" target="_blank" class="proj-link-icon" title="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
+      <h3>Sales Business Intelligence — SQL Analysis</h3>
+      <p class="proj-desc">
+        A full SQL-based business intelligence project analyzing 2,000+ sales transactions across regions, customer segments, and product categories. Designed to simulate the kind of analysis a DA does weekly at a retail or operations company.
+      </p>
+      <ul class="proj-highlights">
+        <li>8 analytical queries covering revenue, profit, customer ranking, and growth</li>
+        <li>Window functions: <code>RANK() OVER(PARTITION BY)</code>, running totals, cumulative sums</li>
+        <li>CTEs and self-joins for year-over-year revenue growth comparison</li>
+        <li>Discount impact analysis showing how discounting erodes profit margins</li>
+        <li>Results auto-exported to CSV for downstream reporting</li>
+      </ul>
+      <div class="proj-tags">
+        <span class="ptag">SQL</span><span class="ptag">SQLite</span>
+        <span class="ptag">Python</span><span class="ptag">Pandas</span>
+        <span class="ptag">Window Functions</span><span class="ptag">CTEs</span>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div class="proj-top">
+        <div class="proj-icon" style="background:rgba(6,182,212,.2)">🔎</div>
+        <div class="proj-links-top">
+          <a href="https://github.com/louange-lidvine/retail-eda-analysis" target="_blank" class="proj-link-icon" title="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
+      <h3>Retail Exploratory Data Analysis (EDA)</h3>
+      <p class="proj-desc">
+        A comprehensive exploratory data analysis on a retail sales dataset. Covers the full analyst workflow — from raw data profiling and cleaning to statistical analysis and business storytelling through visualization.
+      </p>
+      <ul class="proj-highlights">
+        <li>Full data quality audit: missing values, duplicates, outlier detection</li>
+        <li>Descriptive statistics and distribution analysis across all numeric variables</li>
+        <li>Regional, segment, and category performance breakdown with business interpretation</li>
+        <li>Pareto analysis: top 20% of customers drive the majority of revenue</li>
+        <li>Correlation analysis: discount rate vs. profit margin (Pearson r)</li>
+        <li>6 publication-quality charts saved automatically to the plots/ folder</li>
+      </ul>
+      <div class="proj-tags">
+        <span class="ptag">Python</span><span class="ptag">Pandas</span>
+        <span class="ptag">Seaborn</span><span class="ptag">Matplotlib</span>
+        <span class="ptag">EDA</span><span class="ptag">Statistics</span>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div class="proj-top">
+        <div class="proj-icon" style="background:rgba(245,158,11,.2)">📁</div>
+        <div class="proj-links-top">
+          <a href="https://github.com/louange-lidvine/automated-excel-report" target="_blank" class="proj-link-icon" title="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
+      <h3>Automated Excel Report Generator</h3>
+      <p class="proj-desc">
+        A Python automation script that replaces hours of manual Excel work — it reads sales data, performs analysis, and generates a fully formatted, publish-ready multi-sheet Excel workbook with one command.
+      </p>
+      <ul class="proj-highlights">
+        <li>3-sheet workbook: Executive Summary, Monthly Trends, and Raw Data</li>
+        <li>KPI cards showing Revenue, Profit, Margin %, Orders, and Customers</li>
+        <li>Embedded line charts for revenue trend visualization</li>
+        <li>Color-scale conditional formatting on YoY growth (red → green)</li>
+        <li>Auto-filter, frozen headers, and column formatting for readability</li>
+        <li>Report auto-named with date stamp for version control</li>
+      </ul>
+      <div class="proj-tags">
+        <span class="ptag">Python</span><span class="ptag">openpyxl</span>
+        <span class="ptag">Excel Automation</span><span class="ptag">Reporting</span>
+        <span class="ptag">Conditional Formatting</span>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div class="proj-top">
+        <div class="proj-icon" style="background:rgba(16,185,129,.2)">📈</div>
+        <div class="proj-links-top">
+          <a href="https://github.com/louange-lidvine/business-dashboard-streamlit" target="_blank" class="proj-link-icon" title="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
+      <h3>Interactive Business Intelligence Dashboard</h3>
+      <p class="proj-desc">
+        A fully interactive BI dashboard built with Streamlit and Plotly — the kind of tool a business analyst would hand to operations managers. Filters drive every chart on the page in real time.
+      </p>
+      <ul class="proj-highlights">
+        <li>Sidebar filters: Year, Region, Category, Segment — all charts respond dynamically</li>
+        <li>6 KPI metric cards with comparison against overall baseline</li>
+        <li>Dual-axis revenue & profit trend chart (area + bar)</li>
+        <li>Regional revenue bar chart, category donut, segment dual-axis</li>
+        <li>Discount vs. profit scatter with OLS regression trendline</li>
+        <li>Quarterly grouped bar and expandable raw data table</li>
+      </ul>
+      <div class="proj-tags">
+        <span class="ptag">Streamlit</span><span class="ptag">Plotly</span>
+        <span class="ptag">Python</span><span class="ptag">Dashboard</span>
+        <span class="ptag">Interactive</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section class="sec" id="experience">
+  <div class="sec-label">Experience</div>
+  <h2 class="sec-title">Where I've Worked</h2>
+  <p class="sec-sub">Professional roles across data systems engineering, business analysis, and full-stack development in Rwanda.</p>
+  <div class="exp-grid">
+
+    <div class="exp-card">
+      <div class="exp-date">2025 — PRESENT</div>
+      <div class="exp-role">Data Analyst / Data Systems Engineer</div>
+      <div class="exp-company"><i class="fas fa-building"></i> Centrika Ltd · Kigali, Rwanda</div>
+      <ul class="exp-list">
+        <li>Design and maintain <strong>SQL queries</strong> to analyze operational and financial datasets across multiple internal systems, enabling data-driven performance reviews</li>
+        <li>Build and maintain <strong>Power BI dashboards</strong> actively used by operations and management teams to track service delivery KPIs and operational health metrics</li>
+        <li>Conduct regular <strong>platform usage analysis</strong> to surface trends, anomalies, and actionable opportunities for efficiency improvements</li>
+        <li>Develop <strong>Python automation scripts</strong> that streamline data extraction, cleaning, and report delivery — reducing manual reporting effort significantly</li>
+        <li>Work cross-functionally with engineering and operations to <strong>investigate data discrepancies</strong>, improve pipeline reliability, and ensure data quality standards</li>
+        <li>Design and implement the <strong>Centrika Reconciliation System</strong> — structured data organization and reporting logic for transactional monitoring datasets</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-date">2023 — 2024</div>
+      <div class="exp-role">Team Lead — Software Development & Data Systems</div>
+      <div class="exp-company"><i class="fas fa-building"></i> Rwanda TVET Board · Kigali, Rwanda</div>
+      <ul class="exp-list">
+        <li>Led a software development team building systems integrated with <strong>SQL databases</strong> for operational data processing and national education management</li>
+        <li>Designed and deployed <strong>monitoring dashboards</strong> tracking key system performance indicators and digital service delivery metrics for national stakeholders</li>
+        <li>Conducted platform usage analysis to identify patterns and inform <strong>improvements in digital service delivery</strong> across Rwanda's TVET ecosystem</li>
+        <li>Architected backend services with <strong>real-time data visualization</strong> capabilities, enabling stakeholders to monitor system status without technical knowledge</li>
+        <li>Mentored junior developers, conducted code reviews, and established <strong>engineering standards</strong> across the team</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Education -->
+  <div style="margin-top:24px">
+    <div class="exp-card" style="border-color:rgba(6,182,212,.25)">
+      <div class="exp-date" style="background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.3);color:var(--teal)">EDUCATION</div>
+      <div class="exp-role">Diploma in Software Programming & Embedded Systems</div>
+      <div class="exp-company"><i class="fas fa-graduation-cap"></i> Rwanda Coding Academy · Kigali, Rwanda</div>
+      <ul class="exp-list">
+        <li>Specialized in software engineering, embedded systems, and full-stack web development</li>
+        <li>Built strong foundations in backend architecture, relational databases, and data processing</li>
+        <li>Developed problem-solving and systems-thinking skills applied throughout professional career</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- IMPACT -->
+<div class="impact-sec">
+  <div class="impact-inner">
+    <div class="sec-label">Impact</div>
+    <h2 class="sec-title">By The Numbers</h2>
+    <p class="sec-sub">A snapshot of what I've delivered across my professional work and personal projects.</p>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <div class="big">2+</div>
+        <p>Years of professional experience across data analytics and software engineering roles</p>
+      </div>
+      <div class="impact-card">
+        <div class="big">4+</div>
+        <p>End-to-end data analytics projects covering SQL, Python, Excel, and interactive dashboards</p>
+      </div>
+      <div class="impact-card">
+        <div class="big">2</div>
+        <p>Organizations where data systems and dashboards I built are actively used in operations</p>
+      </div>
+      <div class="impact-card">
+        <div class="big">10+</div>
+        <p>Technologies mastered spanning data science, frontend development, and data infrastructure</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="sec" id="contact">
+  <div class="sec-label">Contact</div>
+  <h2 class="sec-title">Let's Work Together</h2>
+  <div class="contact-box">
+    <div class="contact-left">
+      <h3>Open to Data Analyst &amp; Business Analyst Roles</h3>
+      <p>
+        If you're looking for someone who can write complex SQL, build dashboards that stakeholders
+        actually use, automate your reporting workflows, and communicate findings clearly to
+        non-technical teams — I'd love to hear from you.
+        <br/><br/>
+        I'm open to full-time positions, contract roles, and remote opportunities.
+        Don't hesitate to reach out — I respond within 24 hours.
+      </p>
+      <a href="mailto:lidvinelouange@gmail.com" class="btn btn-primary">
+        <i class="fas fa-paper-plane"></i> Send Me a Message
+      </a>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:lidvinelouange@gmail.com" class="clink">
+        <div class="clink-ico"><i class="fas fa-envelope"></i></div>
+        <div><small>Email</small><span>lidvinelouange@gmail.com</span></div>
+      </a>
+      <a href="https://linkedin.com/in/louange-lidvine-114aa6261" target="_blank" class="clink">
+        <div class="clink-ico"><i class="fab fa-linkedin"></i></div>
+        <div><small>LinkedIn</small><span>louange-lidvine-114aa6261</span></div>
+      </a>
+      <a href="https://github.com/louange-lidvine" target="_blank" class="clink">
+        <div class="clink-ico"><i class="fab fa-github"></i></div>
+        <div><small>GitHub</small><span>louange-lidvine</span></div>
+      </a>
+      <a href="https://twitter.com/lidvinelouange" target="_blank" class="clink">
+        <div class="clink-ico"><i class="fab fa-twitter"></i></div>
+        <div><small>Twitter</small><span>@lidvinelouange</span></div>
+      </a>
+      <a href="tel:+250793112882" class="clink">
+        <div class="clink-ico"><i class="fas fa-phone"></i></div>
+        <div><small>Phone</small><span>+250 793 112 882</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Designed & built by <b>Louange Lidvine Bizimana</b> · Kigali, Rwanda 🇷🇼 · 2025</p>
+</footer>
+
+</body>
+</html>
